@@ -21,7 +21,7 @@ public class TicketSearchTest {
     Ticket ticket9 = new Ticket(9999, 12_000, 245, "MOW", "NUX");
     Ticket ticket10 = new Ticket(1010, 90_000, 630, "MOW", "NYC");
     Ticket ticket11 = new Ticket(1011, 4_900, 120, "MOW", "KUF");
-    Ticket ticket12 = new Ticket(1012, 30_000, 500, "VVO", "MOW");
+    Ticket ticket12 = new Ticket(1012, 30_000, 500, "MOW", "VVO");
 
 
     @Test
@@ -56,7 +56,70 @@ public class TicketSearchTest {
         manager.add(ticket12);
 
         Ticket[] actual = repo.findAll();
-        Ticket[] expected = {ticket1, ticket2,ticket6, ticket7, ticket8, ticket9, ticket12};
+        Ticket[] expected = {ticket1, ticket2, ticket6, ticket7, ticket8, ticket9, ticket12};
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSearchByTicket() {
+        manager.add(ticket1);
+        manager.add(ticket2);
+        manager.add(ticket3);
+        manager.add(ticket4);
+        manager.add(ticket5);
+        manager.add(ticket6);
+        manager.add(ticket7);
+        manager.add(ticket8);
+        manager.add(ticket9);
+        manager.add(ticket10);
+        manager.add(ticket11);
+        manager.add(ticket12);
+
+        Ticket[] actual = {ticket5};
+        Ticket[] expected = manager.findAll("SVX", "LED");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSearchBy2Ticket() {
+        manager.add(ticket1);
+        manager.add(ticket2);
+        manager.add(ticket3);
+        manager.add(ticket4);
+        manager.add(ticket5);
+        manager.add(ticket6);
+        manager.add(ticket7);
+        manager.add(ticket8);
+        manager.add(ticket9);
+        manager.add(ticket10);
+        manager.add(ticket11);
+        manager.add(ticket12);
+
+        Ticket[] actual = {ticket2, ticket12};
+        Ticket[] expected = manager.findAll("MOW", "VVO");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSearchByNoTicket() {
+        manager.add(ticket1);
+        manager.add(ticket2);
+        manager.add(ticket3);
+        manager.add(ticket4);
+        manager.add(ticket5);
+        manager.add(ticket6);
+        manager.add(ticket7);
+        manager.add(ticket8);
+        manager.add(ticket9);
+        manager.add(ticket10);
+        manager.add(ticket11);
+        manager.add(ticket12);
+
+        Ticket[] actual = {};
+        Ticket[] expected = manager.findAll("LON", "MOW");
 
         Assertions.assertArrayEquals(expected, actual);
     }
